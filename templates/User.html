@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="../static/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="../static/bootstrap-fileinput/css/fileinput.min.css">
+        <link rel="stylesheet" href="../static/font awesome/all.css">
+        
+        <title>用户界面</title>
+    </head>
+<!-- {% block top %} -->
+    <body style="background: #f8f9fa">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info" style="box-shadow: 0 0 0 5px #747474">
+            <a class="navbar-brand" href="#">
+                <h1 class="font-weight-bold font-italic pl-5">Lee.HZ</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+              
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto mt-2">
+                    <li class="nav-item active">
+                        <a class="nav-link ml-2" href="#">
+                            <h5 class="font-weight-light"><strong>功能展示</strong></h5>
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <h5 class="font-weight-light">数据统计</h5>
+                        </a>
+                    </li> -->
+                </ul>
+                <ul class="form-inline my-2 my-lg-0">
+                    <a class="nav-link" style="color: black;" href="/logout">退出登陆
+                        <!--<h5 class="font-weight-light text-white mr-4 pt-2 pr-5">Verification Code Recognition</h5>!-->
+                    </a>
+                </ul>
+            </div>
+        </nav>
+        <!-- {% endblock top %}
+        {% block content %}
+        {% endblock content %} -->
+        <div class="container-fluid bg-light">
+            <div class="row">
+
+                <div class="col-md-2 ml-4 mt-3">
+
+                    <!-- <div class="d-flex mt-4 mb-4">
+                         
+                        <h3 class="font-weight-light ml-3">验证码模型</h3>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-light">
+                            <h5 class="font-weight-light font-weight-bold">第一类</h5>
+                        </button>
+                    </div>
+                    <hr class="my-2" style="width: 100px">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-light" onclick="javascript:location.href='\\level2'">
+                            <h5 class="font-weight-light">第二类</h5>
+                        </button>
+                    </div>
+                    <hr class="my-2" style="width: 100px">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-light" onclick="javascript:location.href='\\level3'">
+                            <h5 class="font-weight-light">第三类</h5>
+                        </button>
+                    </div>
+                    <hr class="my-2" style="width: 100px">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-light" onclick="javascript:location.href='\\level4'">
+                            <h5 class="font-weight-light">第四类</h5>
+                        </button>
+                    </div>
+                    <hr class="my-2" style="width: 100px">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-light" onclick="javascript:location.href='\\level5'">
+                            <h5 class="font-weight-light">第五类</h5>
+                        </button>
+                    </div>          -->
+
+                </div>
+
+                <div class="col-md-9 mt-4">
+                <a class="btn btn-light" style="text-decoration: underline;color:rgb(0, 38, 255);"  href="{{url_for('goto_new')}}">进入我的文件夹目录</a>
+                <div class="card mt-3">
+                <div class="card-body">
+                    <!-- <h5 class="card-title font-weight-bold " style="font-size:30px;">四则运算</h5> -->
+                    
+
+                    <div class="col">
+                    <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><strong>下载文件</strong></h5>
+                                
+                        <div class="row">
+                            <div class="col">
+                                <div id="filelist">文件列表
+                                   <!-- <ol>
+                                        {% for f in file_list %}
+                                        <a href="#" id="" onclick="download()">{{f}}</a>
+                                        {% endfor %}
+                                    </ol>-->
+                                </div>
+
+                                <div class="row mt-3 ml-1" id="verify-btn-div" style="display: none;">
+                                    <button type="button" class="btn btn-success" id="verify-btn">开始验证</button>
+                                </div>
+                            </div>
+                            <div class="col" id="original-img"></div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                        
+                    
+                    <div class="col">
+                    <div class="card">
+                        <h4 class="card-title font-weight-bold " style="padding-left: 20px;" >四则运算</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">表达式</h5>
+                        <div class="row">
+                            <div class="col">
+                                <div id="calculate_form" style="width: 20rem">
+                                    <input type="text" style="margin-bottom: 25px;"  id="first-oper" name="first-oper" >     
+                                    <br>
+                                    <input type="text"  id="second-oper" name="second-oper" >
+                                    <br>
+                                    <input type="radio" name="kind" value="加法" checked="checked">加法
+                                    <br>
+                                    <input type="radio" name="kind" value="减法" >减法
+                                    <br>
+                                    <input type="radio" name="kind" value="乘法" >乘法
+                                    <br>
+                                    <input type="radio" name="kind" value="除法" >除法     
+                                    <br>
+                                    <button type="submit" onclick="calculate()">运算</button> 
+                                </div>
+
+
+                                <div class="row mt-3 ml-1" id="verify-btn-div" style="display: none;">
+                                    <button type="button" class="btn btn-success" id="verify-btn">开始验证</button>
+                                </div>
+                            </div>
+                            <div class="col">
+
+                            <div class="col" id="original-img"></div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="col">
+                    <div class="card">
+                    <div class="card-body" style="padding-left: 10px;">
+                        <h5 class="card-title">结果</h5>                       
+                        <ul id="result">
+                            
+                        </ul>
+                    </div>
+                    </div>
+                    </div>
+
+                </div>
+                </div>              
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="w-1000 copyright text-muted" style="margin-top:30px;text-align: center;"> 
+                Copyright  2020 - present  Lee.HZ  All Rights Reserved.  Powered by Bootstrap
+        </div>
+
+ <!-- {% block bottom%}        -->
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="../static/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+        <script src="../static/bootstrap-fileinput/js/fileinput.min.js"></script>
+        <script src="../static/font awesome/all.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="../static/js/verification_code.js"></script>
+
+        <script>
+            //下载文件
+            function filedownload(obj){
+                var text = $(obj).text()
+                console.log(text)
+                data = {'filename':text}
+                $.ajax({
+                    url:"/download",
+                    type:'POST',
+                    data:JSON.stringify(data),
+                    dataType:"json",
+                    success:function(result){
+                        console.log(result)
+                        alert(result)
+                    },
+                    error:function(result){
+                        alert("下载失败")
+                    }
+                })
+            }
+
+            //没有data 就是直接转路由 调用后台的getlist函数
+            function getlist(){
+                $('#filelist').empty()
+                $.ajax({
+                    url:"/get_list",
+                    type:"get",
+                    success:function(result){
+                        console.log('成功')
+                        $.each(result,function(index){
+                            $('#filelist').append("<a href='#' id='file"+index+"' onclick='filedownload(this)'>"+result[index]+"</a></br>")
+                        })
+                    }
+
+                })
+            }
+
+            function calculate(){
+                console.log("calculate")
+                var first_oper = document.getElementById('first-oper').value
+                var second_oper = document.getElementById('second-oper').value
+                var kind_list = document.getElementsByName('kind')
+                for (var i=0;i<kind_list.length;i++){
+                 if(kind_list[i].checked){
+                 var kind=kind_list[i].value;
+                 }
+                }
+                console.log(first_oper)
+                console.log(second_oper)
+                console.log(kind)
+                //data_temp是js对象
+                data_temp = {'first_oper':first_oper,'second_oper':second_oper,'kind':kind}
+                console.log(data_temp)
+                $.ajax({
+                    url:'/calculate',
+                    type:'POST',
+                    data: JSON.stringify(data_temp),//将js对象变成json字符串
+                    dataType:"json",
+                    success:function(data) {
+                        var html = "<span><strong>"+data+"</strong></span>"
+                        
+                        $("#result").html(html)//在html页面id=result的标签里显示html内容
+                        console.log(data)
+                    }
+                })
+            }
+
+            getlist()
+        </script>
+    
+    </body>
+    <!-- {% endblock bottom%} -->
+</html>

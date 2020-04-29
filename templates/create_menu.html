@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>文件夹目录</title>
+   <link rel="stylesheet" href="../static/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../static/bootstrap-fileinput/css/fileinput.min.css">
+   <link rel="stylesheet" href="../static/font awesome/all.css">
+</head>
+<body>
+   <div>
+      <input type="text" id="create_menu" placeholder="请输入文件夹名">请输入创建的名称
+      <button onclick="create()">点击创建</button>
+   </div>
+   <br>
+   <div>
+      <form id="upload_form" style="width: 20rem" enctype="multipart/form-data" >
+      <input type="file"  id="upload-file" name="upload-file" onchange="showFilename()">
+      <input type="button" value="上传" onclick="upload_file()">
+      </form>
+   </div>
+   
+
+   
+   
+
+   <ul class="">
+      {% if dir_path | length > 0 %}
+         {% for dir in dir_path %}
+            {%if loop.index ==dir_path | length-1 %}<!--dir_path|length 表示dir_path这个列表的长度-->
+               <a href='#' onclick="go_back()">{{dir}}</a>\\
+            {%else%}      
+               <span>{{dir}}\\</span>
+            {%endif%}
+         {% endfor%}
+      {%endif%}
+      <br>
+      <br>
+      {% for d in dir_filelist %}
+            <li><a href="#" onclick="check_file(this)">{{d}}</a></li>
+       {% endfor%}
+   </ul>
+
+
+   <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+   <script>
+      function go_back(){
+         $.ajax({
+            url:'/go_back',
+            type:'post',
+            success:function(result){
+               console.log(result)
+               $('body').html(result)
+            }
+         })
+      }
+
+      function check_file(obj){
+         var dir = $(obj).text()
+         console.log(dir)
+         if(dir.indexOf('.')!= -1){//说明是文件，要下载
+            console.log("路径"+dir)
+            data = {'filename':dir}
+            $.ajax({
+                    url:"/user_download",
+                    type:'POST',
+                    data:JSON.stringify(data),
+                    dataType:"json",
+                    success:function(result){
+                        console.log(result)
+                        alert(result)
+                    },
+                    error:function(result){
+                        alert("下载失败")
+                    }
+                })
+         }
+         else{
+            $.ajax({
+            url:'/check_file',
+            type:'post',
+            data:dir,
+            success:function(result){
+               console.log(result)
+               $('body').html(result)
+            }
+         })
+         }       
+      }
+      function create(){
+         var dir = document.getElementById('create_menu').value
+         console.log(dir)
+         $.ajax({
+            url:'/create_dir',
+            type:'post',
+            data:dir,
+            dataType:"html",
+            success:function(result){
+               console.log(result)
+               $('body').html(result)
+            }
+         })
+      }
+
+      function upload_file(){
+         var formdata = new FormData($("#upload_form")[0])
+                $.ajax({
+                    url:"/user_upload",
+                    type:"POST",
+                    data:formdata,
+                    processData:false,
+                    contentType:false,
+                    cache:false,
+                    success:function(data){
+                        console.log(data)
+                        alert("上传成功")
+                        $('body').html(data)
+                    },
+                    error:function(){
+                        console.log("wrong")
+                        alert("上传失败")
+                    }
+                })
+      }
+   </script>
+</body>
+</html>
